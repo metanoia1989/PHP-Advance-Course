@@ -17,3 +17,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+$api = app('Dingo\Api\Routing\Router');
+$api->version('v1', [
+    'middleware' => ['bindines'],
+    'namespace' => 'App\Http\Controller\Api\\V1',
+], function ($api) {
+    $api->post('verificationCodes', 'VerificationCodesController@store')->name('verificationCodes.store');
+    $api->post('users', 'UserController@store')->name('user.store');
+    $api->post('login', 'UserLoginController@store')->name('login.store');
+});
